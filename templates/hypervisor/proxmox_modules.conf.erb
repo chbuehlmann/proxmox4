@@ -2,6 +2,6 @@
 #Don't edit, please see https://forge.puppetlabs.com/gardouille/proxmox4
 
 ## Load additonnal modules for Proxmox
-<% @pve_modules_list.each do |val| -%>
+<% scope.lookupvar('proxmox4::hypervisor::pve_modules_list').each do |val| -%>
 <%= val %>
 <% end -%>
