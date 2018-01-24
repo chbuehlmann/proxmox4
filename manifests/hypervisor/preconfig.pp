@@ -49,7 +49,7 @@ class proxmox4::hypervisor::preconfig {
     release     => $::lsbdistcodename,
     repos       => 'pve-no-subscription',
 	key         => {
-	  'id'        => '9887F95A',
+	  'id'        => 'BE257BAA5D406D01157D323EC23AC7F49887F95A',
 	  'server'    => 'keyserver.ubuntu.com',
 	},
 	include     => {
