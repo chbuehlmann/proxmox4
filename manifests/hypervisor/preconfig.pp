@@ -37,7 +37,7 @@ class proxmox4::hypervisor::preconfig {
   ->
   # Remove Enterprise repository (need a subscription)
   file { '/etc/apt/sources.list.d/pve-enterprise.list':
-    ensure => $proxmox4::hypervisor::pve_enterprise_repo_ensure,
+    ensure => '$proxmox4::hypervisor::pve_enterprise_repo_ensure',
     notify => Exec[apt_update],
   }
   ->
