@@ -48,6 +48,7 @@ class proxmox4::hypervisor::install {
 
     package { $proxmox4::hypervisor::kernel_pkg_name:
       ensure => $proxmox4::hypervisor::ve_pkg_ensure,
+	  install_options => ['--allow-unauthenticated', '-f'],
       notify => Exec['update_grub'],
     }
 
