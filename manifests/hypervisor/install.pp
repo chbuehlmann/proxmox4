@@ -10,9 +10,9 @@ class proxmox4::hypervisor::install {
   }
 
   notify { 'Kernel-Type':
-      message  => "Your Kernel is: ${::kernelrelease} pve-kernel?: ${::is_pve_kernel} ...",
-      loglevel => warning,
-    } ->
+    message  => "Your Kernel is: ${::kernelrelease} pve-kernel?: ${::is_pve_kernel} ...",
+    loglevel => warning,
+  }
 
   
   # If the system already run a PVE kernel
