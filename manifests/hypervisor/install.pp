@@ -31,8 +31,9 @@ class proxmox4::hypervisor::install {
   else { # If the system run on a standard Debian Kernel
 
     # Ensure to upgrade all packages to latest version from Proxmox repository
+	
     exec { 'Upgrade package from PVE repo':
-      command => 'aptitude -y full-upgrade',
+      command => 'apt-get -y dist-upgrade',
     } ->
 
     # To avoid unwanted reboot (kernel update for example), the PVE kernel is
