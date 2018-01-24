@@ -13,7 +13,7 @@ class proxmox4::hypervisor::install {
     message  => "Your Kernel is: ${::kernelrelease} pve-kernel?: ${::is_pve_kernel} ...",
     loglevel => warning,
   }
-  $reboot = false;
+
   
   # If the system already run a PVE kernel
   ## Quoted boolean value because can't return "true" boolean with personal fact
@@ -28,6 +28,7 @@ class proxmox4::hypervisor::install {
     # Remove useless packages (such as the standard kernel, acpid, ...)
     package { $proxmox4::hypervisor::old_pkg_name:
       ensure => $proxmox4::hypervisor::old_pkg_ensure,
+	  install_options => ['--allow-unauthenticated', '-f'],
       notify => Exec['update_grub'],
     }
 
@@ -36,7 +37,7 @@ class proxmox4::hypervisor::install {
 
   }
   else { # If the system run on a standard Debian Kernel
-	$reboot = true;
+
     # Ensure to upgrade all packages to latest version from Proxmox repository
 	
     exec { 'Upgrade package from PVE repo':
@@ -57,7 +58,6 @@ class proxmox4::hypervisor::install {
       ensure => $proxmox4::hypervisor::ve_pkg_ensure,
 	  install_options => ['--allow-unauthenticated', '-f'],
       notify => Exec['update_grub'],
-	  notify => Reboot['installed'],
     }
 
   }
@@ -66,12 +66,11 @@ class proxmox4::hypervisor::install {
   exec { 'update_grub':
     command     => 'update-grub',
     refreshonly => true,
+	notify => Reboot['installed'],
   }
   
-  if $reboot == true {
-    reboot { 'installed':
-      apply  => finished,
-    }
+  reboot { 'installed':
+    apply  => finished,
   }
 
 } # Private class: proxmox4::hypervisor::install
