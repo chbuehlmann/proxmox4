@@ -47,9 +47,13 @@ class proxmox4::hypervisor::preconfig {
     location    => 'http://download.proxmox.com/debian',
     release     => $::lsbdistcodename,
     repos       => 'pve-no-subscription',
-    include_src => false,
-    key         => '9887F95A',
-    key_server  => 'keyserver.ubuntu.com',
+	key         => {
+	  'id'        => '9887F95A',
+	  'server'    => 'keyserver.ubuntu.com',
+	},
+	include     => {
+	  'src'       => false
+	},
   }
 
   if ! defined(File['/etc/modules-load.d']) {
