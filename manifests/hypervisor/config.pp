@@ -7,7 +7,7 @@ class proxmox4::hypervisor::config {
   File {
     owner => root,
     group => root,
-    mode  => 644,
+    mode  => '644',
   }
 
   Exec {

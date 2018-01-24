@@ -7,7 +7,7 @@ class proxmox4::hypervisor::preconfig {
   File {
     owner => root,
     group => root,
-    mode  => 644,
+    mode  => '644',
   }
 
   Exec {
@@ -34,14 +34,14 @@ class proxmox4::hypervisor::preconfig {
     ],
     onlyif  => "match *[ipaddr = '${::ipaddress}'] size == 0",
   }
-  notice("enterprise-repo: $proxmox4::hypervisor::pve_enterprise_repo_ensure")
+  
   # Remove Enterprise repository (need a subscription)
   file { '/etc/apt/sources.list.d/pve-enterprise.list':
     ensure => "$proxmox4::hypervisor::pve_enterprise_repo_ensure",
     notify => Exec[apt_update],
-	mode   => "0664",
   }
   ->
+  
   # Add the standard repository (~community)
   apt::source {'proxmox4':
     ensure      => present,
@@ -60,7 +60,6 @@ class proxmox4::hypervisor::preconfig {
   if ! defined(File['/etc/modules-load.d']) {
     file { '/etc/modules-load.d':
       ensure => directory,
-	  mode   => "0664",
     }
   }
 
@@ -68,14 +67,13 @@ class proxmox4::hypervisor::preconfig {
     ensure  => present,
     content => template($proxmox4::hypervisor::pve_modules_file_content),
     require => File['/etc/modules-load.d'],
-	mode   => "0664",
   }
 
   # Add a delay at boot to allow a good LVM detection
   if $proxmox4::hypervisor::pve_lvm_delay == true {
     file { $proxmox4::hypervisor::init_lvm_script_path:
       ensure  => present,
-      mode    => 0755,
+      mode    => '0755',
       content => template($proxmox4::hypervisor::init_lvm_script_content),
       notify  => Exec['rebuild_initrd'],
     }

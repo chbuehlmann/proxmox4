@@ -34,7 +34,7 @@ define proxmox4::hypervisor::group ( $group = $title, $acl_path = '/', $permissi
   File {
     owner  => root,
     group  => www-data,
-    mode   => 0640,
+    mode   => '0640',
   }
 
   Exec {
