@@ -39,6 +39,7 @@ class proxmox4::hypervisor::preconfig {
   file { '/etc/apt/sources.list.d/pve-enterprise.list':
     ensure => "$proxmox4::hypervisor::pve_enterprise_repo_ensure",
     notify => Exec[apt_update],
+	mode   => "0664",
   }
   ->
   # Add the standard repository (~community)
