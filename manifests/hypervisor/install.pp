@@ -58,6 +58,11 @@ class proxmox4::hypervisor::install {
   exec { 'update_grub':
     command     => 'update-grub',
     refreshonly => true,
+	notify => Reboot['after_run'],
+  }
+  
+  reboot { 'installed':
+    apply  => finished,
   }
 
 } # Private class: proxmox4::hypervisor::install
