@@ -35,9 +35,14 @@ class proxmox4::hypervisor::preconfig {
     onlyif  => "match *[ipaddr = '${::ipaddress}'] size == 0",
   }
   ->
+  case $proxmox4::hypervisor::pve_enterprise_repo_ensure {
+    'present': { $real_pve_enterprise_repo_ensure = present }
+    'absent':  { $real_pve_enterprise_repo_ensure = absent }
+    default:   { fail("Invalid value '${ensure}' used for ensure") }
+  }
   # Remove Enterprise repository (need a subscription)
   file { '/etc/apt/sources.list.d/pve-enterprise.list':
-    ensure => '$proxmox4::hypervisor::pve_enterprise_repo_ensure',
+    ensure => $real_pve_enterprise_repo_ensure,
     notify => Exec[apt_update],
   }
   ->
