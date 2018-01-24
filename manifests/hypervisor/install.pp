@@ -22,11 +22,13 @@ class proxmox4::hypervisor::install {
     # Installation of Virtual Environnment
     package { $proxmox4::hypervisor::ve_pkg_name:
       ensure => $proxmox4::hypervisor::ve_pkg_ensure,
+	  install_options => ['--allow-unauthenticated', '-f'],
     } ->
 
     # Remove useless packages (such as the standard kernel, acpid, ...)
     package { $proxmox4::hypervisor::old_pkg_name:
       ensure => $proxmox4::hypervisor::old_pkg_ensure,
+	  install_options => ['--allow-unauthenticated', '-f'],
       notify => Exec['update_grub'],
     }
 
