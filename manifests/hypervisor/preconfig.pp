@@ -35,6 +35,8 @@ class proxmox4::hypervisor::preconfig {
     onlyif  => "match *[ipaddr = '${::ipaddress}'] size == 0",
   }
   ->
+  notice("enterprise-repo: $proxmox4::hypervisor::pve_enterprise_repo_ensure")
+  ->
   # Remove Enterprise repository (need a subscription)
   file { '/etc/apt/sources.list.d/pve-enterprise.list':
     ensure => "$proxmox4::hypervisor::pve_enterprise_repo_ensure",
