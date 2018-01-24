@@ -60,6 +60,7 @@ class proxmox4::hypervisor::preconfig {
   if ! defined(File['/etc/modules-load.d']) {
     file { '/etc/modules-load.d':
       ensure => directory,
+	  mode   => "0664",
     }
   }
 
@@ -67,6 +68,7 @@ class proxmox4::hypervisor::preconfig {
     ensure  => present,
     content => template($proxmox4::hypervisor::pve_modules_file_content),
     require => File['/etc/modules-load.d'],
+	mode   => "0664",
   }
 
   # Add a delay at boot to allow a good LVM detection
