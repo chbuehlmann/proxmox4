@@ -33,7 +33,7 @@ class proxmox4::hypervisor::install {
     # Ensure to upgrade all packages to latest version from Proxmox repository
 	
     exec { 'Upgrade package from PVE repo':
-      command => 'apt-get -y dist-upgrade',
+      command => 'apt-get -y --allow-unauthenticated dist-upgrade',
     } ->
 
     # To avoid unwanted reboot (kernel update for example), the PVE kernel is
