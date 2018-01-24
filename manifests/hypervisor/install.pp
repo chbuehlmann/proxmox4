@@ -9,6 +9,12 @@ class proxmox4::hypervisor::install {
     logoutput => 'on_failure',
   }
 
+  notify { 'Kernel-Type':
+      message  => "Your Kernel is: ${::kernelrelease} pve-kernel?: ${::is_pve_kernel} ...",
+      loglevel => warning,
+    } ->
+
+  
   # If the system already run a PVE kernel
   ## Quoted boolean value because can't return "true" boolean with personal fact
   if $::is_pve_kernel == 'true' {
